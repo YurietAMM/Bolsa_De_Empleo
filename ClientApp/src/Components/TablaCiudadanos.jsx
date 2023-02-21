@@ -1,6 +1,12 @@
 ﻿import { Table, Button } from "reactstrap";
 
-const TablaCiudadanos = ({ dataCiudadanos }) => {
+const TablaCiudadanos = ({ dataCiudadanos, setEditar, mostrarModal, setMostrarModal, eliminaCiudadano }) => {
+
+    const enviarDatos = (ciudadano) => {
+        setEditar(ciudadano);
+        setMostrarModal(!mostrarModal);
+    }
+
     return (
         <Table striped responsive>
             <thead>
@@ -26,8 +32,8 @@ const TablaCiudadanos = ({ dataCiudadanos }) => {
                     ) : (
                             dataCiudadanos.map((ciudadano, index) => (
                                 <tr key={index}>
-                                    <td>{ciudadano.IdCiudadano}</td>
-                                    <td>{ciudadano.tipoDocumento}</td>
+                                    <td>{ciudadano.idCiudadano}</td>
+                                    <td>{ciudadano.idTipoDocumento}</td>
                                     <td>{ciudadano.numeroDocumento}</td>
                                     <td>{ciudadano.nombres}</td>
                                     <td>{ciudadano.apellidos}</td>
@@ -36,8 +42,8 @@ const TablaCiudadanos = ({ dataCiudadanos }) => {
                                     <td>{ciudadano.aspiracionSalarial}</td>
                                     <td>{ciudadano.correoElectronico}</td>
                                     <td>
-                                        <Button color="primary" className="me-2">Editar</Button>
-                                        <Button color="danger">Eliminar</Button>
+                                        <Button color="primary" className="me-2" onClick={() => enviarDatos(ciudadano)}>Editar</Button>
+                                        <Button color="danger" onClick={() => eliminaCiudadano(ciudadano.idCiudadano)}>Eliminar</Button>
                                     </td>
                                 </tr>
                             ))

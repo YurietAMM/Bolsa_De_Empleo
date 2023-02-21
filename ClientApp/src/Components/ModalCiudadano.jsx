@@ -1,6 +1,5 @@
-﻿import React, { useState } from 'react';
-import { useEffect } from "react";
-import { Input, Button, FormGroup, Label, Modal, ModalHeader, ModalBody, ModalFooter, Form, Select } from "reactstrap";
+﻿import React, { useEffect, useState } from 'react';
+import { Input, Button, FormGroup, Label, Modal, ModalHeader, ModalBody, ModalFooter, Form } from "reactstrap";
 
 const modeloCiudadano = {
     idCiudadano: 0,
@@ -14,7 +13,7 @@ const modeloCiudadano = {
     correoElectronico: ""
 };
 
-const ModalCiudadano = ({ mostrarModal, setMostrarModal, guardarCiudadano, dataTD }) => {
+const ModalCiudadano = ({ mostrarModal, setMostrarModal, guardarCiudadano, dataTD, editar, setEditar, editarCiudadano }) => {
 
     const [ciudadano, setCiudadano] = useState(modeloCiudadano);
 
@@ -28,19 +27,31 @@ const ModalCiudadano = ({ mostrarModal, setMostrarModal, guardarCiudadano, dataT
             )
     }
 
-    useEffect(() => {
-        
-    }, []);
-
     const enviarDatos = () => {
-        if (ciudadano.idCiudadano == 0) {
+        if (ciudadano.idCiudadano === 0) {
             guardarCiudadano(ciudadano);
+        } else {
+            editarCiudadano(ciudadano);
         }
+        setCiudadano(modeloCiudadano);
     }
+
+    const cerrarModal = () => {
+        setMostrarModal(!mostrarModal);
+        setEditar(null);
+    }
+
+    useEffect(() => {
+        if (editar != null) {
+            setCiudadano(editar);
+        } else {
+            setCiudadano(modeloCiudadano);
+        }
+    }, [editar]);
     
     return (
         <Modal isOpen={mostrarModal}>
-            <ModalHeader>Registrar Ciudadano</ModalHeader>
+            <ModalHeader> {ciudadano.idCiudadano == 0 ? "Registrar Ciudadano" : "Editar Ciudadano"} </ModalHeader>
             <ModalBody>
                 <Form>
                     <FormGroup>
@@ -83,7 +94,7 @@ const ModalCiudadano = ({ mostrarModal, setMostrarModal, guardarCiudadano, dataT
                 </Form>
             </ModalBody>
             <ModalFooter>
-                <Button color="danger" className="me-2" onClick={ () => setMostrarModal(!mostrarModal) }>Cerrar</Button>
+                <Button color="danger" className="me-2" onClick={cerrarModal}>Cerrar</Button>
                 <Button color="primary" onClick={ enviarDatos }>Guardar</Button>
             </ModalFooter>
         </Modal>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Container, Row, Col, Card, CardHeader, CardBody, Button } from "reactstrap";
+import { Row, Col, Card, CardHeader, CardBody, Button } from "reactstrap";
 import TablaCiudadanos from "./Components/TablaCiudadanos";
 import ModalCiudadano from './Components/ModalCiudadano';
 
@@ -8,6 +8,7 @@ const App = () => {
     const [ciudadanos, setCiudadanos] = useState([]);
     const [tiposDocumento, setTiposDocumento] = useState([]);
     const [mostrarModal, setMostrarModal] = useState(false);
+    const [editar, setEditar] = useState(null);
 
     const mostrarCiudadanos = async () => {
         const respuesta = await fetch("api/ciudadano/ListarCiudadanos");
@@ -61,8 +62,42 @@ const App = () => {
         }
     }
 
+    const editaCiudadano = async (ciudadano) => {
+        const respuesta = await fetch("api/ciudadano/EditarCiudadano", {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(ciudadano)
+        })
+
+        if (respuesta.ok) {
+            setMostrarModal(!mostrarModal);
+            mostrarCiudadanos();
+        }
+    }
+
+    const eliminaCiudadano = async (idCiudadano) => {
+
+        var response = window.confirm("desea eliminar el ciudadano");
+
+        if (!response) {
+            return;
+        }
+
+        const respuesta = await fetch("api/ciudadano/EliminarCiudadano/" + idCiudadano, {
+            method: 'DELETE',
+
+            })
+
+        if (respuesta.ok) {
+            setMostrarModal(!mostrarModal);
+            mostrarCiudadanos();
+        }
+    }
+
     return (
-        <Container>
+        <div className="container-fluid">
             <Row className="mt-5">
                 <Col sm="12">
                     <Card>
@@ -75,16 +110,24 @@ const App = () => {
                             >Registrar Ciudadano</Button>
                             <hr></hr>
                             <TablaCiudadanos
-                                
-                                dataCiudadanos={ciudadanos} />
+                                setEditar={setEditar}
+                                mostrarModal={mostrarModal}
+                                setMostrarModal={setMostrarModal}
+                                dataCiudadanos={ciudadanos}
+                                eliminaCiudadano={eliminaCiudadano}
+                            />
                         </CardBody>
                     </Card>
                 </Col>
             </Row>
             <ModalCiudadano dataTD={tiposDocumento} mostrarModal={mostrarModal}
                 setMostrarModal={setMostrarModal}
-                guardarCiudadano={guardaCiudadano} />
-        </Container>
+                guardarCiudadano={guardaCiudadano}
+                editar={editar}
+                setEditar={setEditar}
+                editarCiudadano={editaCiudadano}
+            />
+        </div>
     );
 }
 
