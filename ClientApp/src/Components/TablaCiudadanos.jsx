@@ -1,5 +1,4 @@
-﻿import { Button } from "bootstrap";
-import { Table } from "reactstrap";
+﻿import { Table, Button } from "reactstrap";
 
 const TablaCiudadanos = ({ dataCiudadanos }) => {
     return (
@@ -26,7 +25,7 @@ const TablaCiudadanos = ({ dataCiudadanos }) => {
                         </tr>
                     ) : (
                             dataCiudadanos.map((ciudadano, index) => (
-                                <tr key={ciudadano.IdCiudadano}>
+                                <tr key={index}>
                                     <td>{ciudadano.IdCiudadano}</td>
                                     <td>{ciudadano.tipoDocumento}</td>
                                     <td>{ciudadano.numeroDocumento}</td>

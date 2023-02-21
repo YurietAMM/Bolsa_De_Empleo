@@ -7,6 +7,7 @@ import ModalCiudadano from './Components/ModalCiudadano';
 const App = () => {
     const [ciudadanos, setCiudadanos] = useState([]);
     const [tiposDocumento, setTiposDocumento] = useState([]);
+    const [mostrarModal, setMostrarModal] = useState(false);
 
     const mostrarCiudadanos = async () => {
         const respuesta = await fetch("api/ciudadano/ListarCiudadanos");
@@ -24,23 +25,41 @@ const App = () => {
         mostrarCiudadanos();
     }, []);
 
-    const mostrarTiposDocumento = async () => {
-        const respuesta = await fetch("api/tipodocumento/ListarTipoDocumento");
+    //const mostrarTiposDocumento = async () => {
+    //    const respuesta = await fetch("api/tipodocumento/ListarTipoDocumento");
 
-        if (respuesta.ok) {
-            const data = await respuesta.json();
-            setTiposDocumento(data);
-        }
-        else {
-            console.error("error en la lista de tipos de documentos");
-        }
-    }
+    //    if (respuesta.ok) {
+    //        const data = await respuesta.json();
+    //        setTiposDocumento(data);
+    //    }
+    //    else {
+    //        console.error("error en la lista de tipos de documentos");
+    //    }
+    //}
 
     useEffect(() => {
         fetch('/api/tipodocumento/ListarTipoDocumento')
             .then(response => response.json())
-            .then(data => setTiposDocumento(data));
+            .then(data => {
+                setTiposDocumento(data);
+            });
     }, []);
+
+
+    const guardaCiudadano = async (ciudadano) => {
+        const respuesta = await fetch("api/ciudadano/GuardarCiudadano", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(ciudadano)
+        })
+
+        if (respuesta.ok) {
+            setMostrarModal(!mostrarModal);
+            mostrarCiudadanos();
+        }
+    }
 
     return (
         <Container>
@@ -51,14 +70,20 @@ const App = () => {
                             <h5 className="text-center">Lista de Ciudadanos</h5>
                         </CardHeader>
                         <CardBody>
-                            <Button size="sm" color="success">Registrar Ciudadano</Button>
+                            <Button size="sm" color="success"
+                                onClick={() => setMostrarModal(!mostrarModal)}
+                            >Registrar Ciudadano</Button>
                             <hr></hr>
-                            <TablaCiudadanos dataCiudadanos={ciudadanos} />
+                            <TablaCiudadanos
+                                
+                                dataCiudadanos={ciudadanos} />
                         </CardBody>
                     </Card>
                 </Col>
             </Row>
-            <ModalCiudadano dataTD={tiposDocumento} />
+            <ModalCiudadano dataTD={tiposDocumento} mostrarModal={mostrarModal}
+                setMostrarModal={setMostrarModal}
+                guardarCiudadano={guardaCiudadano} />
         </Container>
     );
 }

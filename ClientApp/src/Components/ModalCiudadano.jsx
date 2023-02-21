@@ -1,53 +1,91 @@
-﻿import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Select, Option, Input, Button } from "reactstrap";
+﻿import React, { useState } from 'react';
+import { useEffect } from "react";
+import { Input, Button, FormGroup, Label, Modal, ModalHeader, ModalBody, ModalFooter, Form, Select } from "reactstrap";
 
-const ModalCiudadano = ({ dataTD }) => {
+const modeloCiudadano = {
+    idCiudadano: 0,
+    idTipoDocumento: 0,
+    numeroDocumento: 0,
+    nombres: "",
+    apellidos: "",
+    fechaNacimiento: "",
+    profesion: "",
+    aspiracionSalarial: 0,
+    correoElectronico: ""
+};
+
+const ModalCiudadano = ({ mostrarModal, setMostrarModal, guardarCiudadano, dataTD }) => {
+
+    const [ciudadano, setCiudadano] = useState(modeloCiudadano);
+
+    const actualizardatos = (e) => {
+        console.log(e.target.name + " : " + e.target.value);
+        setCiudadano(
+            {
+                ...ciudadano,
+                [e.target.name] : e.target.value
+            }
+            )
+    }
+
+    useEffect(() => {
+        
+    }, []);
+
+    const enviarDatos = () => {
+        if (ciudadano.idCiudadano == 0) {
+            guardarCiudadano(ciudadano);
+        }
+    }
+    
     return (
-        <Modal isOpen={true}>
-            <ModalHeader>Reagistrar Ciudadano</ModalHeader>
+        <Modal isOpen={mostrarModal}>
+            <ModalHeader>Registrar Ciudadano</ModalHeader>
             <ModalBody>
                 <Form>
                     <FormGroup>
                         <Label>Tipo de Documento</Label>
-                        <select className="form-select">
+                        <select name="idTipoDocumento" className="form-select" onChange={(e) => actualizardatos(e)} value={ ciudadano.idTipoDocumento }>
                             {dataTD.map((tipoDocumento, index) => (
-                                <option key={index} value={tipoDocumento.IdTipoDocumento}>{tipoDocumento.Nombre}</option>
+                                <option key={index} value={tipoDocumento.idTipoDocumento}>{tipoDocumento.nombre}</option>
                             ))}
                         </select>
                     </FormGroup>
+
                     <FormGroup>
                         <Label>Número de Documento</Label>
-                        <Input type="number" />
+                        <Input name="numeroDocumento"onChange={(e) => actualizardatos(e)} value={ciudadano.numeroDocumento} />
                     </FormGroup>
                     <FormGroup>
                         <Label>Nombres</Label>
-                        <Input type="text" />
+                        <Input name="nombres" onChange={(e) => actualizardatos(e)} value={ciudadano.nombres} />
                     </FormGroup>
                     <FormGroup>
                         <Label>Apellidos</Label>
-                        <Input type="text" />
+                        <Input name="apellidos" onChange={(e) => actualizardatos(e)} value={ciudadano.apellidos} />
                     </FormGroup>
                     <FormGroup>
                         <Label>Fecha de Nacimiento</Label>
-                        <Input type="text" />
+                        <Input name="fechaNacimiento" onChange={(e) => actualizardatos(e)} value={ciudadano.fechaNacimiento} />
                     </FormGroup>
                     <FormGroup>
                         <Label>Profesión</Label>
-                        <Input type="text" />
+                        <Input name="profesion" onChange={(e) => actualizardatos(e)} value={ciudadano.profesion} />
                     </FormGroup>
                     <FormGroup>
                         <Label>Aspiración Salarial COP</Label>
-                        <Input type="number" />
+                        <Input name="aspiracionSalarial" onChange={(e) => actualizardatos(e)} value={ciudadano.aspiracionSalarial} />
                     </FormGroup>
                     <FormGroup>
-                        <Label>Correo Electronico</Label>
-                        <Input type="email" />
+                        <Label>Correo Electrónico</Label>
+                        <Input name="correoElectronico" onChange={(e) => actualizardatos(e)} value={ciudadano.correoElectronico} />
                     </FormGroup>
-                    <ModalFooter>
-                        <Button color="danger" className="me-2">Cerrar</Button>
-                        <Button color="primary">Guardar</Button>
-                    </ModalFooter>
                 </Form>
             </ModalBody>
+            <ModalFooter>
+                <Button color="danger" className="me-2" onClick={ () => setMostrarModal(!mostrarModal) }>Cerrar</Button>
+                <Button color="primary" onClick={ enviarDatos }>Guardar</Button>
+            </ModalFooter>
         </Modal>
     );
 }
