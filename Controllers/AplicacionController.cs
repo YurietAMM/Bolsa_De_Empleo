@@ -30,13 +30,7 @@ namespace Bolsa_De_Empleo.Controllers
         [Route("GuardarAplicacion")]
         public async Task<IActionResult> Guardar([FromBody] Aplicacion aplicacion)
         {
-            int id = (int)aplicacion.IdVacante;
-
-            Vacante VacanteAplicada = _dbContext.Vacantes.Find(id);
-            VacanteAplicada.Estado = 1;
-
             await _dbContext.Aplicaciones.AddAsync(aplicacion);
-            _dbContext.Vacantes.Update(VacanteAplicada);
             await _dbContext.SaveChangesAsync();
 
             return StatusCode(StatusCodes.Status200OK, "ok");

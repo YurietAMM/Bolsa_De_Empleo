@@ -1,10 +1,11 @@
 ﻿import { Table, Button } from "reactstrap";
 
-const TablaVacantes = ({ dataVacantes, setAplicar, mostrarModal, setMostrarModal }) => {
+const TablaVacantes = ({ dataVacantes, setAplicar, mostrarModalVacantes, setmostrarModalVacantes, setIdVacante }) => {
 
-    const enviarDatos = (vacante) => {
+    const enviarDatos = (vacante) => { 
+        setIdVacante(vacante.idVacante);
         setAplicar(vacante);
-        setMostrarModal(!mostrarModal);
+        setmostrarModalVacantes(!mostrarModalVacantes);
     };
 
     return (

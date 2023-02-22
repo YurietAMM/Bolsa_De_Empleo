@@ -4,15 +4,37 @@ import { Row, Col, Card, CardHeader, CardBody, Button } from "reactstrap";
 import TablaCiudadanos from "./Components/TablaCiudadanos";
 import ModalCiudadano from './Components/ModalCiudadano';
 import TablaVacantes from './Components/TablaVacantes';
+import ModalAplicacion from './Components/ModalAplicacion';
+import TablaAplicaciones from './Components/TablaAplicaciones';
 
 const App = () => {
     const [ciudadanos, setCiudadanos] = useState([]);
     const [tiposDocumento, setTiposDocumento] = useState([]);
     const [mostrarModal, setMostrarModal] = useState(false);
     const [editar, setEditar] = useState(null);
+
     const [vacantes, setVacantes] = useState([]);
     const [aplicar, setAplicar] = useState(null);
     const [mostrarModalVacantes, setmostrarModalVacantes] = useState(false);
+
+    const [aplicaciones, setAplicaciones] = useState([]);
+    const [idVacante, setIdVacante] = useState();
+
+    const mostrarAplicaciones = async () => {
+        const respuesta = await fetch("api/aplicacion/ListarAplicaciones");
+
+        if (respuesta.ok) {
+            const data = await respuesta.json();
+            setAplicaciones(data);
+        }
+        else {
+            console.error("error en la lista de aplicaciones");
+        }
+    }
+
+    useEffect(() => {
+        mostrarAplicaciones();
+    }, []);
 
     const mostrarCiudadanos = async () => {
         const respuesta = await fetch("api/ciudadano/ListarCiudadanos");
@@ -36,7 +58,6 @@ const App = () => {
         if (respuesta.ok) {
             const data = await respuesta.json();
             setVacantes(data);
-            console.log(data);
         }
         else {
             console.error("error en la lista de vacantes ofertadas");
@@ -55,6 +76,23 @@ const App = () => {
             });
     }, []);
 
+    const guardarAplicacion = async (aplicacion) => {
+        try {
+            const respuesta = await fetch("api/aplicacion/GuardarAplicacion", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                },
+                body: JSON.stringify(aplicacion)
+            })
+
+            if (respuesta.ok) {
+                setMostrarModal(!mostrarModal);
+                mostrarCiudadanos();
+            }
+        }
+        catch (e) { console.error(e); }
+    }
 
     const guardaCiudadano = async (ciudadano) => {
         try {
@@ -146,6 +184,7 @@ const App = () => {
                         </CardHeader>
                         <CardBody>
                             <TablaVacantes
+                                setIdVacante={setIdVacante}
                                 dataVacantes={vacantes}
                                 setAplicar={setAplicar}
                                 mostrarModalVacantes={mostrarModalVacantes}
@@ -154,6 +193,19 @@ const App = () => {
                     </Card>
                 </Col>
             </Row>
+            <Row className="mt-5">
+                <Col sm="12">
+                    <Card>
+                        <CardHeader>
+                            <h5 className="text-center">Lista de Vacantes Aplicadas</h5>
+                        </CardHeader>
+                        <CardBody>
+                            <TablaAplicaciones dataAplicaciones={aplicaciones} />
+                        </CardBody>
+                    </Card>
+                </Col>
+            </Row>
+
             <ModalCiudadano dataTD={tiposDocumento} mostrarModal={mostrarModal}
                 setMostrarModal={setMostrarModal}
                 guardarCiudadano={guardaCiudadano}
@@ -161,6 +213,7 @@ const App = () => {
                 setEditar={setEditar}
                 editarCiudadano={editaCiudadano}
             />
+            <ModalAplicacion data={idVacante} dataCiudadano={ciudadanos} mostrarModalVacantes={mostrarModalVacantes} setmostrarModalVacantes={setmostrarModalVacantes} guardarAplicacion={guardarAplicacion} />
         </div>
         
     );
