@@ -16,8 +16,7 @@ namespace Bolsa_De_Empleo.Models
         public string? Descripcion { get; set; }
         public string? Empresa { get; set; }
         public long? Salario { get; set; }
-        public int Estado { get; set; }
-
+        
         public virtual ICollection<Aplicacion> Aplicaciones { get; set; }
     }
 }
