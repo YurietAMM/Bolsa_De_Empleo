@@ -16,11 +16,11 @@ nombre varchar(50)
 --insertando datos en la tabla Tipo de documento
 insert into Tipo_Documento(nombre)
 values (
-'C�dula de Ciudadan�a');
+'Cedula de Ciudadania');
 
 insert into Tipo_Documento(nombre)
 values (
-'C�dula de Extranjer�a');
+'Cedula de Extranjeria');
 
 insert into Tipo_Documento(nombre)
 values (
@@ -60,23 +60,23 @@ insert into Vacantes (codigo, cargo, descripcion, empresa, salario)
 values (
 'RS001', 
 'Ingeniero Industrial', 
-'Se requiere Ingeniero Industrial con m�nimo 2 a�os de experiencia en Salud Ocupacional', 
+'Se requiere Ingeniero Industrial con mínimo 2 años de experiencia en Salud Ocupacional', 
 'EPM', 
 '2500000');
 
 insert into Vacantes (codigo, cargo, descripcion, empresa, salario)
 values (
 'RS002', 
-'Profesor de Qu�mica', 
-'Se requiere Qu�mico con m�nimo 3 a�os de experiencia en docencia', 
-'INSTITUCI�N EDUCATIVA IES', 
+'Profesor de Química', 
+'Se requiere Químico con mínimo 3 años de experiencia en docencia', 
+'INSTITUCIÓN EDUCATIVA IES', 
 '1900000');
 
 insert into Vacantes (codigo, cargo, descripcion, empresa, salario)
 values (
 'RS003', 
 'Ingeniero de Desarrollo Junior', 
-'Se requiere Ingeniero de Sistemas con m�nimo 1 a�o de experiencia en Desarrollo de Software en tecnolog�a JAVA', 
+'Se requiere Ingeniero de Sistemas con mínimo 1 año de experiencia en Desarrollo de Software en tecnología JAVA', 
 'XRM SERVICES', 
 '2600000');
 
@@ -84,15 +84,15 @@ insert into Vacantes (codigo, cargo, descripcion, empresa, salario)
 values (
 'RS004', 
 'Coordinador de Mercadeo', 
-'Se necesita Coordinador de Mercadeo con estudios Tecnol�gicos graduado y experiencia m�nima de un a�o', 
+'Se necesita Coordinador de Mercadeo con estudios Tecnológicos graduado y experiencia mínima de un año', 
 'INSERCOL', 
 '1350000');
 
 insert into Vacantes (codigo, cargo, descripcion, empresa, salario)
 values (
 'RS005', 
-'Profesor de Matem�ticas', 
-'Se requiere Licenciado en Matem�ticas o Ingeniero con m�nimo 2 a�os de experiencia en docencia', 
+'Profesor de Matemáticas', 
+'Se requiere Licenciado en Matemáticas o Ingeniero con mínimo 2 años de experiencia en docencia', 
 'SENA', 
 '1750000');
 
@@ -100,7 +100,7 @@ insert into Vacantes (codigo, cargo, descripcion, empresa, salario)
 values (
 'RS006', 
 'Mensajero', 
-'Se requiere Mensajero con moto, con documentos al d�a y buenas relaciones personales', 
+'Se requiere Mensajero con moto, con documentos al día y buenas relaciones personales', 
 'SERVIENTREGA', 
 '950000');
 
@@ -108,8 +108,8 @@ insert into Vacantes (codigo, cargo, descripcion, empresa, salario)
 values (
 'RS007', 
 'Cajero', 
-'Se requiere cajero para almac�n de cadena con experiencia m�nima de un a�o, debe disponer de tiempo por cambios de turnos', 
-'ALMACENES �XITO', 
+'Se requiere cajero para almacén de cadena con experiencia mínima de un año, debe disponer de tiempo por cambios de turnos', 
+'ALMACENES ÉXITO', 
 '850000');
 
 --Creando tabla de Aplicaciones a vacantes
