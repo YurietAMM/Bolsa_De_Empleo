@@ -5,7 +5,22 @@ const TablaCiudadanos = ({ dataCiudadanos, setEditar, mostrarModal, setMostrarMo
     const enviarDatos = (ciudadano) => {
         setEditar(ciudadano);
         setMostrarModal(!mostrarModal);
-    }
+    };
+
+    const getTextoTipoDocumento = (numero) => {
+        switch (numero) {
+            case 1:
+                return 'Cédula de Ciudadanía';
+            case 2:
+                return 'Cédula de Extranjería';
+            case 3:
+                return 'Pasaporte';
+            case 4:
+                return 'Otro';
+            default:
+                return '';
+        }
+    };
 
     return (
         <Table striped responsive>
@@ -30,10 +45,11 @@ const TablaCiudadanos = ({ dataCiudadanos, setEditar, mostrarModal, setMostrarMo
                             <td colSpan="10">Sin registros</td>
                         </tr>
                     ) : (
-                            dataCiudadanos.map((ciudadano, index) => (
+                        dataCiudadanos.sort((a, b) => a.idCiudadano - b.idCiudadano),
+                        dataCiudadanos.map((ciudadano, index) => (
                                 <tr key={index}>
                                     <td>{ciudadano.idCiudadano}</td>
-                                    <td>{ciudadano.idTipoDocumento}</td>
+                                    <td>{getTextoTipoDocumento(ciudadano.idTipoDocumento)}</td>
                                     <td>{ciudadano.numeroDocumento}</td>
                                     <td>{ciudadano.nombres}</td>
                                     <td>{ciudadano.apellidos}</td>
@@ -47,7 +63,7 @@ const TablaCiudadanos = ({ dataCiudadanos, setEditar, mostrarModal, setMostrarMo
                                     </td>
                                 </tr>
                             ))
-                            )
+                        )
                 }
             </tbody>
         </Table>

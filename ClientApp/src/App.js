@@ -48,52 +48,61 @@ const App = () => {
 
 
     const guardaCiudadano = async (ciudadano) => {
-        const respuesta = await fetch("api/ciudadano/GuardarCiudadano", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8'
-            },
-            body: JSON.stringify(ciudadano)
-        })
+        try {
+            const respuesta = await fetch("api/ciudadano/GuardarCiudadano", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                },
+                body: JSON.stringify(ciudadano)
+            })
 
-        if (respuesta.ok) {
-            setMostrarModal(!mostrarModal);
-            mostrarCiudadanos();
+            if (respuesta.ok) {
+                setMostrarModal(!mostrarModal);
+                mostrarCiudadanos();
+            }
         }
+        catch (e) { console.error(e); }
     }
 
     const editaCiudadano = async (ciudadano) => {
-        const respuesta = await fetch("api/ciudadano/EditarCiudadano", {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8'
-            },
-            body: JSON.stringify(ciudadano)
-        })
+        try {
+            const respuesta = await fetch("api/ciudadano/EditarCiudadano", {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                },
+                body: JSON.stringify(ciudadano)
+            })
 
-        if (respuesta.ok) {
-            setMostrarModal(!mostrarModal);
-            mostrarCiudadanos();
+            if (respuesta.ok) {
+                setMostrarModal(!mostrarModal);
+                mostrarCiudadanos();
+            }
         }
+        catch (e) { console.error(e); }
     }
 
     const eliminaCiudadano = async (idCiudadano) => {
 
-        var response = window.confirm("desea eliminar el ciudadano");
+        try {
+            var response = window.confirm("desea eliminar el ciudadano");
 
-        if (!response) {
-            return;
-        }
+            if (!response) {
+                return;
+            }
 
-        const respuesta = await fetch("api/ciudadano/EliminarCiudadano/" + idCiudadano, {
-            method: 'DELETE',
+            const respuesta = await fetch("api/ciudadano/EliminarCiudadano/" + idCiudadano, {
+                method: 'DELETE',
 
             })
 
-        if (respuesta.ok) {
-            setMostrarModal(!mostrarModal);
-            mostrarCiudadanos();
+            if (respuesta.ok) {
+                setMostrarModal(!mostrarModal);
+                mostrarCiudadanos();
+            }
         }
+        catch (e) { console.error(e); }
     }
 
     return (
