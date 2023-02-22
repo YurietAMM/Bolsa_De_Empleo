@@ -7,7 +7,7 @@ const modeloCiudadano = {
     numeroDocumento: 0,
     nombres: "",
     apellidos: "",
-    fechaNacimiento: "",
+    fechaNacimiento: new Date(),
     profesion: "",
     aspiracionSalarial: 0,
     correoElectronico: ""
