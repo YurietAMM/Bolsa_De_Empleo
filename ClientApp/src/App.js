@@ -87,20 +87,15 @@ const App = () => {
             })
 
             if (respuesta.ok) {
-                setMostrarModal(!mostrarModal);
+                setMostrarModal(!mostrarModalVacantes);
                 mostrarCiudadanos();
             }
         }
         catch (e) { console.error(e); }
     }
-
     const guardaCiudadano = async (ciudadano) => {
         try {
-            const respuesta = await fetch("api/ciudadano/GuardarCiudadano", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json;charset=utf-8'
-                },
+            const respuesta = await fetch("api/ciudadano/GuardarCiudadano", { method: 'POST', headers: {'Content-Type': 'application/json;charset=utf-8'},
                 body: JSON.stringify(ciudadano)
             })
 
@@ -213,7 +208,7 @@ const App = () => {
                 setEditar={setEditar}
                 editarCiudadano={editaCiudadano}
             />
-            <ModalAplicacion data={idVacante} dataCiudadano={ciudadanos} mostrarModalVacantes={mostrarModalVacantes} setmostrarModalVacantes={setmostrarModalVacantes} guardarAplicacion={guardarAplicacion} />
+            <ModalAplicacion IdVacante={idVacante} dataCiudadano={ciudadanos} mostrarModalVacantes={mostrarModalVacantes} setmostrarModalVacantes={setmostrarModalVacantes} guardarAplicacion={guardarAplicacion} />
         </div>
         
     );

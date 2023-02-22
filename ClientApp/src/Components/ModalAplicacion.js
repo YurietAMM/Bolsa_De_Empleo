@@ -1,6 +1,5 @@
-﻿import { data } from 'jquery';
-import React, { useState } from 'react';
-import { Button, FormGroup, Label, Modal, ModalHeader, ModalBody, ModalFooter, Form } from "reactstrap";
+﻿import React, { useState } from 'react';
+import { Button, FormGroup, Label, Modal, ModalHeader, ModalBody, ModalFooter, Form, Input } from "reactstrap";
 
 const modeloAplicacion = {
     idAplicacion: 0,
@@ -8,7 +7,7 @@ const modeloAplicacion = {
     idCiudadano: 0
 };
 
-const ModalAplicacion = ({ mostrarModalVacantes, setmostrarModalVacantes, guardarAplicacion, data, dataCiudadano }) => {
+const ModalAplicacion = ({ mostrarModalVacantes, setmostrarModalVacantes, guardarAplicacion, IdVacante, dataCiudadano }) => {
 
     const [aplicacion, setAplicacion] = useState(modeloAplicacion);
 
@@ -23,7 +22,6 @@ const ModalAplicacion = ({ mostrarModalVacantes, setmostrarModalVacantes, guarda
     }
 
     const enviarDatos = () => {
-        setAplicacion(prevState => ({...prevState, idVacante: data}));
         guardarAplicacion(aplicacion);
         setAplicacion(modeloAplicacion);
     }
@@ -35,9 +33,13 @@ const ModalAplicacion = ({ mostrarModalVacantes, setmostrarModalVacantes, guarda
 
     return (
         <Modal isOpen={mostrarModalVacantes}>
-            <ModalHeader> Aplicar a Cargo {data} </ModalHeader>
+            <ModalHeader> Aplicar a Cargo </ModalHeader>
             <ModalBody>
                 <Form>
+                    <FormGroup>
+                        <Label>Id Vacante</Label>
+                        <Input name='idVacante' value={IdVacante} readOnly/>
+                    </FormGroup>
                     <FormGroup>
                         <Label>Nombre del Ciudadano</Label>
                         <select name="idCiudadano" className="form-select" onChange={(e) => actualizardatos(e)} value={aplicacion.idCiudadano}>

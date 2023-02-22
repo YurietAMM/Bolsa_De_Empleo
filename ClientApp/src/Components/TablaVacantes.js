@@ -27,7 +27,7 @@ const TablaVacantes = ({ dataVacantes, setAplicar, mostrarModalVacantes, setmost
                             <td colSpan="6">Sin registros</td>
                         </tr>
                     ) : (
-                            dataVacantes.sort((a, b) => a.codigo - b.codigo),
+                            dataVacantes.sort((a, b) => a.idVacante - b.idVacante),
                         dataVacantes.map((vacante, index) => (
                             <tr key={index}>
                                 <td>{vacante.codigo}</td>
